@@ -33,9 +33,13 @@ public class hexLogic extends JFrame {
     private JTextField livestf, colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf;
     private JButton save, goBack;
     private CCHack cchack;
+    private File file;
+    private JFrame ourWindow;
 
     public hexLogic(File file, CCHack cchack) throws IOException {
 	super("Select Values");
+	this.file = file;
+	this.ourWindow = this;
 	this.cchack = cchack;
 	Path source = Paths.get(file.getAbsolutePath());
 	Path destination = Paths.get(file.getAbsolutePath() + ".bak");
@@ -74,6 +78,27 @@ public class hexLogic extends JFrame {
 	goBack.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent ae) {
 		System.exit(0);
+	    }
+	});
+
+	save.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent ae) {
+		try {
+		    int livesInt = Integer.parseInt(lives.getText());
+		    int colorInt = Integer.parseInt(color.getText());
+		    int jellyInt = Integer.parseInt(jelly.getText());
+		    int coconutInt = Integer.parseInt(coconut.getText());
+		    int lollipopInt = Integer.parseInt(lollipop.getText());
+		    int luckyInt = Integer.parseInt(lucky.getText());
+		    int wrappedInt = Integer.parseInt(wrapped.getText());
+
+		    hexEdits actualHack = new hexEdits(file, livesInt, colorInt, jellyInt, coconutInt, lollipopInt,
+			    luckyInt, wrappedInt);
+		} catch (IOException e) {
+		    JOptionPane.showMessageDialog(ourWindow, "Error writing to file! Check console for stack trace!",
+			    "Writing Error", JOptionPane.ERROR_MESSAGE);
+		    e.printStackTrace();
+		}
 	    }
 	});
 
@@ -127,9 +152,9 @@ public class hexLogic extends JFrame {
     private void checkIfValid(JTextField text) {
 	if (isStringInt(text.getText())) {
 	    long val = Long.parseLong(text.getText());
-	    if (val > 255) {
-		JOptionPane.showMessageDialog(this, "Max size is 255", "Number Error", JOptionPane.ERROR_MESSAGE);
-		text.setText("255");
+	    if (val > 65535) {
+		JOptionPane.showMessageDialog(this, "Max size is 65535", "Number Error", JOptionPane.ERROR_MESSAGE);
+		text.setText("65535");
 	    }
 	    if (val < 0) {
 		JOptionPane.showMessageDialog(this, "Value cannot be negative!", "Number Error",

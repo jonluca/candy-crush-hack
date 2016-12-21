@@ -1,0 +1,25 @@
+package logic;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
+public class hexEdits {
+    private File file;
+
+    public hexEdits(File file) throws IOException {
+	this.file = file;
+	editFile();
+    }
+
+    private void editFile() throws IOException {
+	if (file != null) {
+
+	    RandomAccessFile raf = new RandomAccessFile(file, "rw");
+	    raf.seek(5); // Go to byte at offset position 5.
+	    raf.write(70);
+
+	}
+    }
+
+}

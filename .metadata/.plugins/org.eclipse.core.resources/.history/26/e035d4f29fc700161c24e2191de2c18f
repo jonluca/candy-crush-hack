@@ -1,0 +1,19 @@
+package logic;
+
+import java.io.File;
+
+public class hexEdits {
+    private File file;
+
+    public hexEdits(File file) {
+	this.file = file;
+	editFile();
+    }
+
+    private void editFile() {
+	if (file != null) {
+
+	}
+    }
+
+}
