@@ -20,16 +20,18 @@ All the offsets are below. They are converted to byte offset location for Random
 0x00000070 04 – Lollipop Hammer
 0x00000090 08 – Lucky Candy
 0x000000A0 04 – Wrapped and Striped
+More?
+0x000000B0 00 - hands
 
 */
 
 public class hexEdits {
     private File file;
     private JFrame origin;
-    int livesInt, colorInt, jellyInt, coconutInt, lollipopInt, luckyInt, wrappedInt;
+    int livesInt, colorInt, jellyInt, coconutInt, lollipopInt, luckyInt, wrappedInt, handsInt;
 
     public hexEdits(JFrame origin, File file, int livesInt, int colorInt, int jellyInt, int coconutInt, int lollipopInt,
-	    int luckyInt, int wrappedInt) throws IOException {
+	    int luckyInt, int wrappedInt, int handsInt) throws IOException {
 	this.origin = origin;
 	this.livesInt = livesInt;
 	this.colorInt = colorInt;
@@ -38,6 +40,7 @@ public class hexEdits {
 	this.lollipopInt = lollipopInt;
 	this.luckyInt = luckyInt;
 	this.wrappedInt = wrappedInt;
+	this.handsInt = handsInt;
 
 	this.file = file;
 	editFile();
@@ -69,32 +72,40 @@ public class hexEdits {
 		// Coconut
 		raf.seek(104);
 
-		data[0] = (byte) (livesInt & 0xFF);
-		data[1] = (byte) ((livesInt >> 8) & 0xFF);
+		data[0] = (byte) (coconutInt & 0xFF);
+		data[1] = (byte) ((coconutInt >> 8) & 0xFF);
 
 		raf.write(data);
 
 		// Lollipop
 		raf.seek(116);
 
-		data[0] = (byte) (livesInt & 0xFF);
-		data[1] = (byte) ((livesInt >> 8) & 0xFF);
+		data[0] = (byte) (lollipopInt & 0xFF);
+		data[1] = (byte) ((lollipopInt >> 8) & 0xFF);
 
 		raf.write(data);
 
 		// Lucky
 		raf.seek(152);
 
-		data[0] = (byte) (livesInt & 0xFF);
-		data[1] = (byte) ((livesInt >> 8) & 0xFF);
+		data[0] = (byte) (luckyInt & 0xFF);
+		data[1] = (byte) ((luckyInt >> 8) & 0xFF);
+
+		raf.write(data);
+
+		// Hand
+		raf.seek(172);
+
+		data[0] = (byte) (handsInt & 0xFF);
+		data[1] = (byte) ((handsInt >> 8) & 0xFF);
 
 		raf.write(data);
 
 		// Wrapped
 		raf.seek(164);
 
-		data[0] = (byte) (livesInt & 0xFF);
-		data[1] = (byte) ((livesInt >> 8) & 0xFF);
+		data[0] = (byte) (wrappedInt & 0xFF);
+		data[1] = (byte) ((wrappedInt >> 8) & 0xFF);
 
 		raf.write(data);
 
