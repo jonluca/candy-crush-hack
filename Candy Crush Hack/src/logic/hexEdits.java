@@ -110,7 +110,7 @@ public class hexEdits {
 		raf.close();
 		JOptionPane.showMessageDialog(origin,
 			"Success! Simply place your save_##########.dat back in the data folder for Candy Crash Saga ",
-			"Writing Error", JOptionPane.ERROR_MESSAGE);
+			"Writing Error", JOptionPane.PLAIN_MESSAGE);
 	    }
 
 	}
