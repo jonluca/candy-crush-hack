@@ -13,7 +13,7 @@ public class HelpGUI extends JFrame {
     public HelpGUI() {
 	super("Help");
 
-	setSize(800, 360);
+	setSize(800, 436);
 	setResizable(false);
 	getContentPane().setBackground(Color.white);
 	setLocationRelativeTo(null);

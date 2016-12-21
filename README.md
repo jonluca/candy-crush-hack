@@ -4,6 +4,10 @@ A Java GUI for hacking Candy Crush save game files
 <img src='https://i.imgur.com/AWGKP7X.png' title='Video Walkthrough' width='' alt='Main Screenshot' />
 <img src='https://i.imgur.com/vSowIqk.png' title='Video Walkthrough' width='' alt='Choices Screenshot' />
 
+## Downloads
+
+[If you do not wish to compile this yourself, the binary can be found here](https://github.com/jonluca/candy-crush-hack/releases/tag/1.0)
+
 ## Note
 
 

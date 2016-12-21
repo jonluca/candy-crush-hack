@@ -190,8 +190,8 @@ public class ValueSelectionGUI extends JFrame {
 
 	maxAll.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent ae) {
-		AppearanceSettings.setMax(livestf, colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf,
-			handstf);
+		AppearanceSettings.setMax(livestf, colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf, handstf,
+			ufotf, painttf);
 	    }
 	});
 
