@@ -96,7 +96,7 @@ public class ValueSelectionGUI extends JFrame {
 	    wrappedtf.setText(Integer.toString(((data[0] & 0xFF) << 8) | (data[1] & 0xFF)));
 
 	    // Wrapped
-	    raf.seek(172);
+	    raf.seek(176);
 	    raf.readFully(data);
 	    handstf.setText(Integer.toString(((data[0] & 0xFF) << 8) | (data[1] & 0xFF)));
 
@@ -229,7 +229,7 @@ public class ValueSelectionGUI extends JFrame {
 
     public void createGUI() {
 	JPanel numbers = new JPanel();
-	numbers.setLayout(new GridLayout(7, 1));
+	numbers.setLayout(new GridLayout(8, 1));
 	numbers.setSize(400, 400);
 
 	AppearanceSettings.addToGrid(numbers, lives, livestf, color, colortf, jelly, jellytf, coconut, coconuttf,

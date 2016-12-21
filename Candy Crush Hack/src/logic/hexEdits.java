@@ -93,19 +93,19 @@ public class hexEdits {
 
 		raf.write(data);
 
-		// Hand
-		raf.seek(172);
-
-		data[0] = (byte) (handsInt & 0xFF);
-		data[1] = (byte) ((handsInt >> 8) & 0xFF);
-
-		raf.write(data);
-
 		// Wrapped
 		raf.seek(164);
 
 		data[0] = (byte) (wrappedInt & 0xFF);
 		data[1] = (byte) ((wrappedInt >> 8) & 0xFF);
+
+		raf.write(data);
+
+		// Hand
+		raf.seek(176);
+
+		data[0] = (byte) (handsInt & 0xFF);
+		data[1] = (byte) ((handsInt >> 8) & 0xFF);
 
 		raf.write(data);
 
