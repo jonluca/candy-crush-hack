@@ -1,4 +1,4 @@
-# candy-crush-hack
+# Candy Crush Sage Save Game Hack
 A Java GUI for hacking Candy Crush save game files
 
 <img src='https://i.imgur.com/AWGKP7X.png' title='Video Walkthrough' width='' alt='Main Screenshot' />
