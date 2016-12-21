@@ -3,13 +3,18 @@ package gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class Menu extends JMenuBar {
 
-    public Menu() {
+    private JFrame frame;
+
+    public Menu(JFrame frame) {
+	this.frame = frame;
 	JMenu menu;
 	JMenuItem about, help;
 
@@ -23,7 +28,8 @@ public class Menu extends JMenuBar {
 	about.getAccessibleContext().setAccessibleDescription("About");
 	about.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent ae) {
-		System.exit(0);
+		JOptionPane.showMessageDialog(frame, "© 2017 JonLuca De Caro\nhttp://jonlu.ca", "About",
+			JOptionPane.PLAIN_MESSAGE);
 	    }
 	});
 	menu.add(about);
@@ -33,7 +39,7 @@ public class Menu extends JMenuBar {
 	help.getAccessibleContext().setAccessibleDescription("Help");
 	help.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent ae) {
-		System.exit(0);
+		new HelpGUI();
 	    }
 	});
 	menu.add(help);

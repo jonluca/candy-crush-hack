@@ -152,7 +152,7 @@ public class ValueSelectionGUI extends JFrame {
 	addWindowListener(new ExitWindowListener());
 	setLayout(new FlowLayout());
 	setLocationRelativeTo(null);
-	setJMenuBar(new Menu());
+	setJMenuBar(new Menu((JFrame) this));
 
 	save = new JButton("Save");
 	goBack = new JButton("Quit");
@@ -254,7 +254,7 @@ public class ValueSelectionGUI extends JFrame {
 	numbers.setSize(400, 500);
 
 	AppearanceSettings.addToGrid(numbers, lives, livestf, color, colortf, jelly, jellytf, coconut, coconuttf,
-		lollipop, lollipoptf, lucky, luckytf, wrapped, wrappedtf, hands, handstf, ufo, ufotf, paint, paintf);
+		lollipop, lollipoptf, lucky, luckytf, wrapped, wrappedtf, hands, handstf, ufo, ufotf, paint, painttf);
 
 	JPanel bottomButtons = new JPanel();
 	bottomButtons.setLayout(new GridLayout(1, 2));
