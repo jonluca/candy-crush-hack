@@ -1,0 +1,7 @@
+package gui;
+
+import JMenuBar;
+
+public class Menu extends JMenuBar {
+
+}

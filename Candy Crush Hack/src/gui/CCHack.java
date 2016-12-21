@@ -18,7 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import logic.hexLogic;
+import other.AppearanceSettings;
+import other.Constants;
 
 public class CCHack extends JFrame {
 
@@ -50,6 +51,7 @@ public class CCHack extends JFrame {
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setLayout(new FlowLayout());
 	setLocationRelativeTo(null);
+	setJMenuBar(new Menu());
 
 	selectLabel = new JLabel("Please select your save_##########.dat");
 	infoLabel = new JLabel("Welcome to Candy Crush Saga Hacks!");
@@ -68,7 +70,7 @@ public class CCHack extends JFrame {
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 		    selectedFile = file.getSelectedFile();
 		    try {
-			hexLogic logic = new hexLogic(selectedFile, (CCHack) ourFrame);
+			ValueSelectionGUI logic = new ValueSelectionGUI(selectedFile, (CCHack) ourFrame);
 			setVisible(false);
 		    } catch (IOException e) {
 			// TODO Auto-generated catch block
