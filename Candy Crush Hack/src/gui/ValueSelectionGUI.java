@@ -62,6 +62,8 @@ public class ValueSelectionGUI extends JFrame {
 
     private void setValues() {
 	RandomAccessFile raf = null;
+	// The following all read the current values from the save file as a
+	// frame of reference to the user
 	try {
 	    raf = new RandomAccessFile(file, "rw");
 	    byte[] data = new byte[2];
@@ -121,8 +123,9 @@ public class ValueSelectionGUI extends JFrame {
 	    JOptionPane.showMessageDialog(ourWindow, "File not found!", "Reading Error", JOptionPane.ERROR_MESSAGE);
 	    e.printStackTrace();
 	} catch (IOException e) {
-	    JOptionPane.showMessageDialog(ourWindow, "Error writing to file! Check console for stack trace!",
-		    "Writing Error", JOptionPane.ERROR_MESSAGE);
+	    JOptionPane.showMessageDialog(ourWindow, "Error reading from file! Is it a valid save game?",
+		    "Reading Error", JOptionPane.ERROR_MESSAGE);
+	    save.setEnabled(false);
 	    e.printStackTrace();
 	} finally {
 	    try {
@@ -178,6 +181,8 @@ public class ValueSelectionGUI extends JFrame {
 		    int ufoInt = Integer.parseInt(ufotf.getText());
 		    int paintInt = Integer.parseInt(painttf.getText());
 
+		    // Pass along selected values to the function that does the
+		    // actual modification of the save game file
 		    hexEdits actualHack = new hexEdits(ourWindow, file, livesInt, colorInt, jellyInt, coconutInt,
 			    lollipopInt, luckyInt, wrappedInt, handsInt, ufoInt, paintInt);
 		} catch (IOException e) {
@@ -272,7 +277,10 @@ public class ValueSelectionGUI extends JFrame {
 
     // People of the future, don't judge me for the following code
     private void checkIfValid(JTextField text) {
+	// Check if empty, and if valid int
 	if (!text.getText().trim().equals("") && isStringInt(text.getText())) {
+	    // hacky way of maximizing value - it'll fit in a long, then just
+	    // create an int with max 65535
 	    long val = Long.parseLong(text.getText());
 	    if (val > 65535) {
 		JOptionPane.showMessageDialog(this, "Max size is 65535", "Number Error", JOptionPane.ERROR_MESSAGE);

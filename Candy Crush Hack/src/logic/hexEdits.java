@@ -13,6 +13,10 @@ Below is the logic for the actual hack
 
 All the offsets are below. They are converted to byte offset location for RandomAccessFile 
 
+note: it appears King stores their variables in int16s rather than regular ints. 
+I'm not sure why, because you would either go for short or an int. int16 is quite an odd choice ¯\_(ツ)_/¯
+Just 2 bytes, though
+
 0x00000290 00 – Lives
 0x00000050 00 – Color Bomb
 0x00000050 0C – Jelly Fish
@@ -56,10 +60,11 @@ public class hexEdits {
 		// Color Bomb
 		raf.seek(80); // Go to byte at offset position 80.
 
-		byte[] data = new byte[2];
+		byte[] data = new byte[2]; // initialize 2 byte array.
 
-		data[0] = (byte) (colorInt & 0xFF);
-		data[1] = (byte) ((colorInt >> 8) & 0xFF);
+		data[0] = (byte) (colorInt & 0xFF); // byte mask to get the
+						    // first byte
+		data[1] = (byte) ((colorInt >> 8) & 0xFF);// shifted by a byte
 
 		raf.write(data);
 
@@ -137,6 +142,8 @@ public class hexEdits {
 
 	    } finally {
 		raf.close();
+
+		// If you got here, then it was a success
 		JOptionPane.showMessageDialog(origin,
 			"Success! Simply place your save_##########.dat back in the data folder for Candy Crash Saga ",
 			"Success", JOptionPane.PLAIN_MESSAGE);

@@ -12,6 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+/**
+ * Borrowed and modified from CS201 at USC, Fall 2016. Helpful functions that
+ * are variadic and allow massive manipulation quickly
+ */
 public class AppearanceSettings {
 
     // sets background color of JComponents passed in
@@ -22,13 +26,7 @@ public class AppearanceSettings {
 	    component.setBackground(backGround);
     }
 
-    // sets the layout to boxlayout for each panel
-    public static void setBoxLayout(int axis, JPanel... panels) {
-
-	for (JPanel panel : panels)
-	    panel.setLayout(new BoxLayout(panel, axis));
-    }
-
+    // Adds everything to the grid layout correctly and identically
     public static void addToGrid(JPanel add, JComponent... labels) {
 	boolean check = false;
 	for (int i = 0; i < labels.length; i += 2) {
@@ -42,26 +40,6 @@ public class AppearanceSettings {
 	    add.add(topPanel);
 	}
 
-    }
-
-    @SafeVarargs
-    public static <T extends JComponent> void addGlue(JPanel panel, int axis, Boolean addInitialGlue, T... components) {
-
-	if (addInitialGlue)
-	    panel.add(axis == BoxLayout.PAGE_AXIS ? Box.createVerticalGlue() : Box.createHorizontalGlue());
-
-	for (T component : components) {
-	    panel.add(component);
-	    panel.add(axis == BoxLayout.PAGE_AXIS ? Box.createVerticalGlue() : Box.createHorizontalGlue());
-	}
-    }
-
-    // sets foreground of supplied JComponents
-    @SafeVarargs
-    public static <T extends JComponent> void setForeground(Color foreGround, T... components) {
-
-	for (T component : components)
-	    component.setForeground(foreGround);
     }
 
     // sets font of supplied JComponents
@@ -80,14 +58,6 @@ public class AppearanceSettings {
 	    label.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
-    // sets components opaque
-    @SafeVarargs
-    public static <T extends JComponent> void setOpaque(T... components) {
-
-	for (T component : components)
-	    component.setOpaque(true);
-    }
-
     // centers the text for the passed in labels
     @SafeVarargs
     public static void setColumn(JFormattedTextField... labels) {
@@ -102,22 +72,6 @@ public class AppearanceSettings {
 
 	for (JFormattedTextField label : labels)
 	    label.setText("65535");
-    }
-
-    // sets visibility of supplied components
-    @SafeVarargs
-    public static <T extends JComponent> void setVisible(Boolean visible, T... components) {
-
-	for (T component : components)
-	    component.setVisible(visible);
-    }
-
-    // sets visibility of supplied components
-    @SafeVarargs
-    public static <T extends JComponent> void setEnabled(Boolean enabled, T... components) {
-
-	for (T component : components)
-	    component.setEnabled(enabled);
     }
 
     // sets size of components

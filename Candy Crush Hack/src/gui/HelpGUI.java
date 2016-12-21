@@ -18,9 +18,7 @@ public class HelpGUI extends JFrame {
 	getContentPane().setBackground(Color.white);
 	setLocationRelativeTo(null);
 	setVisible(true);
-
 	add(note);
-
     }
 
 }
