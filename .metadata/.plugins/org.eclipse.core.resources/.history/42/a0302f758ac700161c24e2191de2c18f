@@ -1,0 +1,10 @@
+package gui;
+
+import java.awt.Font;
+
+public class Constants {
+    Font topFont, regularFont, whiteFont;
+    topFont = new Font("Calibri", Font.BOLD, 35);
+	regularFont = new Font("Calibri", Font.PLAIN, 20);
+	whiteFont = new Font("Calibri", Font.BOLD, 24);
+}

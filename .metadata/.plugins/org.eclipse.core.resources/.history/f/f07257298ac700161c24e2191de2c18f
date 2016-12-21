@@ -1,0 +1,78 @@
+package logic;
+
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import gui.AppearanceSettings;
+
+public class hexLogic extends JFrame {
+    private JLabel lives, color, jelly, coconut, lollipop, lucky, wrapped;
+    private JTextField livestf, colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf;
+    private JButton save, goBack;
+
+    public hexLogic(File file) throws IOException {
+	super("Select Values");
+	Path source = Paths.get(file.getAbsolutePath());
+	Path destination = Paths.get(file.getAbsolutePath() + ".bak");
+	Files.copy(source, destination);
+	initializeComponents();
+	createGUI();
+	setVisible(true);
+    }
+
+    public void initializeComponents() {
+	setSize(300, 800);
+	setResizable(false);
+	getContentPane().setBackground(Color.white);
+	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	setLayout(new FlowLayout());
+	setLocationRelativeTo(null);
+
+	save = new JButton("Save");
+	goBack = new JButton("Return");
+
+	lives = new JLabel("Lives");
+	color = new JLabel("Color Bombs");
+	jelly = new JLabel("Jelly Fish");
+	coconut = new JLabel("Coconut Bomb");
+	lollipop = new JLabel("Lollipop Hammer");
+	lucky = new JLabel("Lucky Candy");
+	wrapped = new JLabel("Wrapped and Striped");
+
+	livestf = new JTextField("0");
+	colortf = new JTextField("0");
+	jellytf = new JTextField("0");
+	coconuttf = new JTextField("0");
+	lollipoptf = new JTextField("0");
+	luckytf = new JTextField("0");
+	wrappedtf = new JTextField("0");
+
+	AppearanceSettings.setSize(150, 50, lives, color, jelly, coconut, lollipop, lucky, wrapped);
+	AppearanceSettings.setSize(50, 50,livestf, colortf,
+		jellytf, coconuttf, lollipoptf, luckytf, wrappedtf);
+    }
+
+    public void createGUI() {
+	JPanel numbers = new JPanel();
+	numbers.setLayout(new GridLayout(7, 2));
+	numbers.setSize(300, 700);
+
+	AppearanceSettings.addToGrid(numbers, lives, livestf, color, colortf, jelly, jellytf, coconut, coconuttf,
+		lollipop, lollipoptf, lucky, luckytf, wrapped, wrappedtf);
+
+	add(numbers);
+
+    }
+}

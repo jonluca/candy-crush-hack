@@ -1,0 +1,8 @@
+package gui;
+
+import java.awt.Font;
+
+public class Constants {
+    Font topFont, regularFont, whiteFont;
+
+}

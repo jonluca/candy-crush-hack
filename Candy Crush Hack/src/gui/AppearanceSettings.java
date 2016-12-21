@@ -7,30 +7,11 @@ import java.awt.Font;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-//this class contains methods to make the GUI making process easier in settings aesthetic properties of components
-//many of these methods are generically typed to only accept objects that have JComponent as a super class
-//this lets us pass in a combination of different JComponent child classes (buttons, labels, ect)
-//thought this would be a good was to show you guys how generics can be used
-
-//another fun fact, many of these methods take a parameter such as "JComponent... components
-//this means multiple JComponents can be passed into the method, which will come in handy
 public class AppearanceSettings {
-
-    // JTextArea settings
-    public static void setTextComponents(JTextArea... components) {
-
-	for (JTextArea component : components) {
-	    component.setEditable(false);
-	    component.setLineWrap(true);
-	    component.setWrapStyleWord(true);
-	    component.setOpaque(true);
-	}
-    }
 
     // sets background color of JComponents passed in
     @SafeVarargs
@@ -47,8 +28,21 @@ public class AppearanceSettings {
 	    panel.setLayout(new BoxLayout(panel, axis));
     }
 
-    // iterates through the components and adds them to the panel with glue in
-    // between
+    public static void addToGrid(JPanel add, JComponent... labels) {
+	boolean check = false;
+	for (int i = 0; i < labels.length; i += 2) {
+	    JPanel topPanel = new JPanel();
+	    topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+	    topPanel.setBackground(Color.white);
+	    topPanel.add(Box.createHorizontalStrut(20));
+	    topPanel.add(labels[i]);
+	    topPanel.add(labels[i + 1]);
+
+	    add.add(topPanel);
+	}
+
+    }
+
     @SafeVarargs
     public static <T extends JComponent> void addGlue(JPanel panel, int axis, Boolean addInitialGlue, T... components) {
 
@@ -79,9 +73,9 @@ public class AppearanceSettings {
 
     // centers the text for the passed in labels
     @SafeVarargs
-    public static void setTextAlignment(JLabel... labels) {
+    public static void setTextAlignment(JTextField... labels) {
 
-	for (JLabel label : labels)
+	for (JTextField label : labels)
 	    label.setHorizontalAlignment(SwingConstants.CENTER);
     }
 

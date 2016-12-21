@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,7 +27,6 @@ public class CCHack extends JFrame {
     private JButton selectButton, helpButton;
     private JFileChooser file;
     private File selectedFile;
-    private Font topFont, regularFont, whiteFont;
     private JFrame ourFrame;
 
     public CCHack() {
@@ -58,10 +56,6 @@ public class CCHack extends JFrame {
 	selectButton = new JButton("Choose File");
 	helpButton = new JButton("Help");
 
-	topFont = new Font("Calibri", Font.BOLD, 35);
-	regularFont = new Font("Calibri", Font.PLAIN, 20);
-	whiteFont = new Font("Calibri", Font.BOLD, 24);
-
 	selectButton.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent ae) {
 		file = new JFileChooser("Choose File");
@@ -74,11 +68,10 @@ public class CCHack extends JFrame {
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 		    selectedFile = file.getSelectedFile();
 		    try {
-			hexLogic logic = new hexLogic(selectedFile);
+			hexLogic logic = new hexLogic(selectedFile, (CCHack) ourFrame);
 			setVisible(false);
 		    } catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 			JOptionPane.showMessageDialog(ourFrame,
 				"Unable to save backup! Check if your file + .bak already exists. If it does, delete it and try again.",
 				"Backup Save Error", JOptionPane.ERROR_MESSAGE);
@@ -94,7 +87,7 @@ public class CCHack extends JFrame {
 	// Info label top
 	infoLabel.setAlignmentX(CENTER_ALIGNMENT);
 	infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-	infoLabel.setFont(topFont);
+	infoLabel.setFont(Constants.topFont);
 	JPanel top = new JPanel();
 	top.setBackground(Color.WHITE);
 	top.setSize(800, 150);
