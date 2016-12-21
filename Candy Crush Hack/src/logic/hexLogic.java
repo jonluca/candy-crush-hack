@@ -13,14 +13,19 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -30,8 +35,8 @@ import gui.Constants;
 
 public class hexLogic extends JFrame {
     private JLabel lives, color, jelly, coconut, lollipop, lucky, wrapped;
-    private JTextField livestf, colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf;
-    private JButton save, goBack;
+    private JFormattedTextField livestf, colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf;
+    private JButton save, goBack, maxAll;
     private CCHack cchack;
     private File file;
     private JFrame ourWindow;
@@ -59,7 +64,7 @@ public class hexLogic extends JFrame {
     }
 
     public void initializeComponents() {
-	setSize(400, 470);
+	setSize(500, 470);
 	setResizable(false);
 	getContentPane().setBackground(Color.white);
 	setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -69,9 +74,11 @@ public class hexLogic extends JFrame {
 
 	save = new JButton("Save");
 	goBack = new JButton("Quit");
+	maxAll = new JButton("Max All");
 
-	save.setSize(200, 100);
-	goBack.setSize(200, 100);
+	save.setSize(150, 100);
+	goBack.setSize(150, 100);
+	maxAll.setSize(150, 100);
 
 	AppearanceSettings.setSize(200, 100, save, goBack);
 
@@ -84,21 +91,27 @@ public class hexLogic extends JFrame {
 	save.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent ae) {
 		try {
-		    int livesInt = Integer.parseInt(lives.getText());
-		    int colorInt = Integer.parseInt(color.getText());
-		    int jellyInt = Integer.parseInt(jelly.getText());
-		    int coconutInt = Integer.parseInt(coconut.getText());
-		    int lollipopInt = Integer.parseInt(lollipop.getText());
-		    int luckyInt = Integer.parseInt(lucky.getText());
-		    int wrappedInt = Integer.parseInt(wrapped.getText());
+		    int livesInt = Integer.parseInt(livestf.getText());
+		    int colorInt = Integer.parseInt(colortf.getText());
+		    int jellyInt = Integer.parseInt(jellytf.getText());
+		    int coconutInt = Integer.parseInt(coconuttf.getText());
+		    int lollipopInt = Integer.parseInt(lollipoptf.getText());
+		    int luckyInt = Integer.parseInt(luckytf.getText());
+		    int wrappedInt = Integer.parseInt(wrappedtf.getText());
 
-		    hexEdits actualHack = new hexEdits(file, livesInt, colorInt, jellyInt, coconutInt, lollipopInt,
-			    luckyInt, wrappedInt);
+		    hexEdits actualHack = new hexEdits(ourWindow, file, livesInt, colorInt, jellyInt, coconutInt,
+			    lollipopInt, luckyInt, wrappedInt);
 		} catch (IOException e) {
 		    JOptionPane.showMessageDialog(ourWindow, "Error writing to file! Check console for stack trace!",
 			    "Writing Error", JOptionPane.ERROR_MESSAGE);
 		    e.printStackTrace();
 		}
+	    }
+	});
+
+	maxAll.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent ae) {
+		AppearanceSettings.setMax(livestf, colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf);
 	    }
 	});
 
@@ -110,13 +123,27 @@ public class hexLogic extends JFrame {
 	lucky = new JLabel("Lucky Candy");
 	wrapped = new JLabel("Wrapped and Striped");
 
-	livestf = new JTextField("0");
-	colortf = new JTextField("0");
-	jellytf = new JTextField("0");
-	coconuttf = new JTextField("0");
-	lollipoptf = new JTextField("0");
-	luckytf = new JTextField("0");
-	wrappedtf = new JTextField("0");
+	NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+	DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
+	decimalFormat.setGroupingUsed(false);
+
+	livestf = new JFormattedTextField(decimalFormat);
+	colortf = new JFormattedTextField(decimalFormat);
+	jellytf = new JFormattedTextField(decimalFormat);
+	coconuttf = new JFormattedTextField(decimalFormat);
+	lollipoptf = new JFormattedTextField(decimalFormat);
+	luckytf = new JFormattedTextField(decimalFormat);
+	wrappedtf = new JFormattedTextField(decimalFormat);
+
+	AppearanceSettings.setColumn(livestf, colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf);
+
+	livestf.getDocument().addDocumentListener(new validNumber(livestf));
+	colortf.getDocument().addDocumentListener(new validNumber(colortf));
+	jellytf.getDocument().addDocumentListener(new validNumber(jellytf));
+	coconuttf.getDocument().addDocumentListener(new validNumber(coconuttf));
+	lollipoptf.getDocument().addDocumentListener(new validNumber(lollipoptf));
+	luckytf.getDocument().addDocumentListener(new validNumber(luckytf));
+	wrappedtf.getDocument().addDocumentListener(new validNumber(wrappedtf));
 
 	AppearanceSettings.setSize(300, 50, lives, color, jelly, coconut, lollipop, lucky, wrapped);
 	AppearanceSettings.setSize(80, 50, livestf, colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf);
@@ -140,6 +167,7 @@ public class hexLogic extends JFrame {
 	bottomButtons.setLayout(new GridLayout(1, 2));
 	bottomButtons.setBackground(Color.white);
 	bottomButtons.add(save);
+	bottomButtons.add(maxAll);
 	bottomButtons.add(goBack);
 	bottomButtons.setPreferredSize(new Dimension(400, 80));
 
@@ -149,20 +177,35 @@ public class hexLogic extends JFrame {
 
     }
 
+    // People of the future, don't judge me for the following code
     private void checkIfValid(JTextField text) {
-	if (isStringInt(text.getText())) {
+	if (!text.getText().trim().equals("") && isStringInt(text.getText())) {
 	    long val = Long.parseLong(text.getText());
 	    if (val > 65535) {
 		JOptionPane.showMessageDialog(this, "Max size is 65535", "Number Error", JOptionPane.ERROR_MESSAGE);
-		text.setText("65535");
+		Runnable set65 = new Runnable() {
+		    @Override
+		    public void run() {
+			text.setText("65535");
+		    }
+		};
+		SwingUtilities.invokeLater(set65);
 	    }
 	    if (val < 0) {
 		JOptionPane.showMessageDialog(this, "Value cannot be negative!", "Number Error",
 			JOptionPane.ERROR_MESSAGE);
-		text.setText("0");
+		Runnable set0 = new Runnable() {
+		    @Override
+		    public void run() {
+			text.setText("0");
+		    }
+		};
+		SwingUtilities.invokeLater(set0);
 	    }
 	} else {
-	    JOptionPane.showMessageDialog(this, "Not a number!", "Text Field Error", JOptionPane.ERROR_MESSAGE);
+	    if (!text.getText().trim().equals("")) {
+		JOptionPane.showMessageDialog(this, "Not a number!", "Text Field Error", JOptionPane.ERROR_MESSAGE);
+	    }
 	}
     }
 
@@ -180,7 +223,7 @@ public class hexLogic extends JFrame {
     private class validNumber implements DocumentListener {
 	JTextField owner;
 
-	public void validNumber(JTextField in) {
+	public validNumber(JTextField in) {
 	    this.owner = in;
 	}
 

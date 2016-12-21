@@ -7,6 +7,7 @@ import java.awt.Font;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -85,6 +86,22 @@ public class AppearanceSettings {
 
 	for (T component : components)
 	    component.setOpaque(true);
+    }
+
+    // centers the text for the passed in labels
+    @SafeVarargs
+    public static void setColumn(JFormattedTextField... labels) {
+
+	for (JFormattedTextField label : labels)
+	    label.setColumns(7);
+    }
+
+    // centers the text for the passed in labels
+    @SafeVarargs
+    public static void setMax(JFormattedTextField... labels) {
+
+	for (JFormattedTextField label : labels)
+	    label.setText("65535");
     }
 
     // sets visibility of supplied components

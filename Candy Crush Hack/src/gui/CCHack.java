@@ -51,7 +51,7 @@ public class CCHack extends JFrame {
 	setLayout(new FlowLayout());
 	setLocationRelativeTo(null);
 
-	selectLabel = new JLabel("Please select your save.dat");
+	selectLabel = new JLabel("Please select your save_##########.dat");
 	infoLabel = new JLabel("Welcome to Candy Crush Saga Hacks!");
 	selectButton = new JButton("Choose File");
 	helpButton = new JButton("Help");

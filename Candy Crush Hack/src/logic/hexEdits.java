@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /*(c) 2017 JonLuca De Caro
  * 
 Below is the logic for the actual hack
@@ -22,10 +25,12 @@ All the offsets are below. They are converted to byte offset location for Random
 
 public class hexEdits {
     private File file;
+    private JFrame origin;
     int livesInt, colorInt, jellyInt, coconutInt, lollipopInt, luckyInt, wrappedInt;
 
-    public hexEdits(File file, int livesInt, int colorInt, int jellyInt, int coconutInt, int lollipopInt, int luckyInt,
-	    int wrappedInt) throws IOException {
+    public hexEdits(JFrame origin, File file, int livesInt, int colorInt, int jellyInt, int coconutInt, int lollipopInt,
+	    int luckyInt, int wrappedInt) throws IOException {
+	this.origin = origin;
 	this.livesInt = livesInt;
 	this.colorInt = colorInt;
 	this.jellyInt = jellyInt;
@@ -103,6 +108,9 @@ public class hexEdits {
 
 	    } finally {
 		raf.close();
+		JOptionPane.showMessageDialog(origin,
+			"Success! Simply place your save_##########.dat back in the data folder for Candy Crash Saga and",
+			"Writing Error", JOptionPane.ERROR_MESSAGE);
 	    }
 
 	}

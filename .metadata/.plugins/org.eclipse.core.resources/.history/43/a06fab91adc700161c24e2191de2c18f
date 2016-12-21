@@ -1,0 +1,125 @@
+package gui;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+public class AppearanceSettings {
+
+    // sets background color of JComponents passed in
+    @SafeVarargs
+    public static <T extends JComponent> void setBackground(Color backGround, T... components) {
+
+	for (T component : components)
+	    component.setBackground(backGround);
+    }
+
+    // sets the layout to boxlayout for each panel
+    public static void setBoxLayout(int axis, JPanel... panels) {
+
+	for (JPanel panel : panels)
+	    panel.setLayout(new BoxLayout(panel, axis));
+    }
+
+    public static void addToGrid(JPanel add, JComponent... labels) {
+	boolean check = false;
+	for (int i = 0; i < labels.length; i += 2) {
+	    JPanel topPanel = new JPanel();
+	    topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+	    topPanel.setBackground(Color.white);
+	    topPanel.add(Box.createHorizontalStrut(20));
+	    topPanel.add(labels[i]);
+	    topPanel.add(labels[i + 1]);
+
+	    add.add(topPanel);
+	}
+
+    }
+
+    @SafeVarargs
+    public static <T extends JComponent> void addGlue(JPanel panel, int axis, Boolean addInitialGlue, T... components) {
+
+	if (addInitialGlue)
+	    panel.add(axis == BoxLayout.PAGE_AXIS ? Box.createVerticalGlue() : Box.createHorizontalGlue());
+
+	for (T component : components) {
+	    panel.add(component);
+	    panel.add(axis == BoxLayout.PAGE_AXIS ? Box.createVerticalGlue() : Box.createHorizontalGlue());
+	}
+    }
+
+    // sets foreground of supplied JComponents
+    @SafeVarargs
+    public static <T extends JComponent> void setForeground(Color foreGround, T... components) {
+
+	for (T component : components)
+	    component.setForeground(foreGround);
+    }
+
+    // sets font of supplied JComponents
+    @SafeVarargs
+    public static <T extends JComponent> void setFont(Font font, T... components) {
+
+	for (T component : components)
+	    component.setFont(font);
+    }
+
+    // centers the text for the passed in labels
+    @SafeVarargs
+    public static void setTextAlignment(JTextField... labels) {
+
+	for (JTextField label : labels)
+	    label.setHorizontalAlignment(SwingConstants.CENTER);
+    }
+
+ // sets components opaque
+    @SafeVarargs
+    public static <T extends JComponent> void setOpaque(T... components) {
+
+	for (T component : components)
+	    component.setOpaque(true);
+    }
+    
+ // sets components opaque
+    @SafeVarargs
+    public static <T extends JComponent> void setColumns(T... components) {
+
+	for (T component : components)
+	    component.setOpaque(true);
+    }
+
+    // sets visibility of supplied components
+    @SafeVarargs
+    public static <T extends JComponent> void setVisible(Boolean visible, T... components) {
+
+	for (T component : components)
+	    component.setVisible(visible);
+    }
+
+    // sets visibility of supplied components
+    @SafeVarargs
+    public static <T extends JComponent> void setEnabled(Boolean enabled, T... components) {
+
+	for (T component : components)
+	    component.setEnabled(enabled);
+    }
+
+    // sets size of components
+    @SafeVarargs
+    public static <T extends JComponent> void setSize(int x, int y, T... components) {
+
+	Dimension dim = new Dimension(x, y);
+
+	for (T component : components) {
+	    component.setPreferredSize(dim);
+	}
+    }
+
+}
