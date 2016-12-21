@@ -28,7 +28,8 @@ public class Menu extends JMenuBar {
 	about.getAccessibleContext().setAccessibleDescription("About");
 	about.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent ae) {
-		JOptionPane.showMessageDialog(frame, "© 2017 JonLuca De Caro\nhttp://jonlu.ca", "About",
+		JOptionPane.showMessageDialog(frame,
+			"© 2017 JonLuca De Caro\nhttp://jonlu.ca\nhttps://github.com/jonluca/candy-crush-hack", "About",
 			JOptionPane.PLAIN_MESSAGE);
 	    }
 	});

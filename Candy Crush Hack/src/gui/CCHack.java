@@ -82,6 +82,11 @@ public class CCHack extends JFrame {
 		}
 	    }
 	});
+	helpButton.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent ae) {
+		new HelpGUI();
+	    }
+	});
 
     }
 
