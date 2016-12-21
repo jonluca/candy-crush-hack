@@ -60,46 +60,9 @@ public class ValueSelectionGUI extends JFrame {
     }
 
     private void setValues() {
-	RandomAccessFile raf = null;
+	RandomAccessFile raf;
 	try {
 	    raf = new RandomAccessFile(file, "rw");
-	    byte[] data = new byte[2];
-
-	    // Color
-	    raf.seek(80); // Go to byte at offset position 80.
-	    raf.readFully(data);
-	    colortf.setText(Integer.toString(((data[0] & 0xFF) << 8) | (data[1] & 0xFF)));
-
-	    // Jelly
-	    raf.seek(92);
-	    raf.readFully(data);
-	    jellytf.setText(Integer.toString(((data[0] & 0xFF) << 8) | (data[1] & 0xFF)));
-
-	    // Coconut
-	    raf.seek(104);
-	    raf.readFully(data);
-	    coconuttf.setText(Integer.toString(((data[0] & 0xFF) << 8) | (data[1] & 0xFF)));
-
-	    // Lollipop
-	    raf.seek(116);
-	    raf.readFully(data);
-	    lollipoptf.setText(Integer.toString(((data[0] & 0xFF) << 8) | (data[1] & 0xFF)));
-
-	    // Lucky
-	    raf.seek(152);
-	    raf.readFully(data);
-	    luckytf.setText(Integer.toString(((data[0] & 0xFF) << 8) | (data[1] & 0xFF)));
-
-	    // Wrapped
-	    raf.seek(164);
-	    raf.readFully(data);
-	    wrappedtf.setText(Integer.toString(((data[0] & 0xFF) << 8) | (data[1] & 0xFF)));
-
-	    // Lives
-	    raf.seek(656);
-	    raf.readFully(data);
-	    livestf.setText(Integer.toString(((data[0] & 0xFF) << 8) | (data[1] & 0xFF)));
-
 	} catch (FileNotFoundException e) {
 	    // TODO Auto-generated catch block
 	    JOptionPane.showMessageDialog(ourWindow, "File not found!", "Reading Error", JOptionPane.ERROR_MESSAGE);
