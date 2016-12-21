@@ -116,7 +116,7 @@ public class hexLogic extends JFrame {
 	bottomButtons.setBackground(Color.white);
 	bottomButtons.add(save);
 	bottomButtons.add(goBack);
-	bottomButtons.setPreferredSize(new Dimension(400, 80));
+	bottomButtons.setPreferredSize(new Dimension(400, 100));
 
 	add(numbers);
 	add(bottomButtons);

@@ -14,7 +14,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -116,11 +115,10 @@ public class hexLogic extends JFrame {
 	bottomButtons.setBackground(Color.white);
 	bottomButtons.add(save);
 	bottomButtons.add(goBack);
-	bottomButtons.setPreferredSize(new Dimension(400, 80));
+	bottomButtons.setPreferredSize(new Dimension(400, 100));
 
 	add(numbers);
 	add(bottomButtons);
-	add(Box.createVerticalStrut(20));
 
     }
 

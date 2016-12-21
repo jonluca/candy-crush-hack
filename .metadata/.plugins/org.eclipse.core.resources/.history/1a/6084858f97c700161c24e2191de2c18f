@@ -1,7 +1,6 @@
 package logic;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,7 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -55,7 +54,7 @@ public class hexLogic extends JFrame {
     }
 
     public void initializeComponents() {
-	setSize(400, 470);
+	setSize(400, 450);
 	setResizable(false);
 	getContentPane().setBackground(Color.white);
 	setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -68,8 +67,6 @@ public class hexLogic extends JFrame {
 
 	save.setSize(200, 100);
 	goBack.setSize(200, 100);
-
-	AppearanceSettings.setSize(200, 100, save, goBack);
 
 	goBack.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent ae) {
@@ -105,22 +102,22 @@ public class hexLogic extends JFrame {
 
     public void createGUI() {
 	JPanel numbers = new JPanel();
-	numbers.setLayout(new GridLayout(7, 1));
-	numbers.setSize(400, 350);
+	numbers.setLayout(new GridLayout(8, 1));
+	numbers.setSize(400, 450);
 
 	AppearanceSettings.addToGrid(numbers, lives, livestf, color, colortf, jelly, jellytf, coconut, coconuttf,
 		lollipop, lollipoptf, lucky, luckytf, wrapped, wrappedtf);
 
 	JPanel bottomButtons = new JPanel();
-	bottomButtons.setLayout(new GridLayout(1, 2));
+	bottomButtons.setLayout(new BoxLayout(bottomButtons, BoxLayout.X_AXIS));
 	bottomButtons.setBackground(Color.white);
 	bottomButtons.add(save);
 	bottomButtons.add(goBack);
-	bottomButtons.setPreferredSize(new Dimension(400, 80));
+	bottomButtons.setSize(400, 100);
+
+	numbers.add(bottomButtons);
 
 	add(numbers);
-	add(bottomButtons);
-	add(Box.createVerticalStrut(20));
 
     }
 

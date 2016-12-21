@@ -14,7 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -55,7 +55,7 @@ public class hexLogic extends JFrame {
     }
 
     public void initializeComponents() {
-	setSize(400, 470);
+	setSize(400, 450);
 	setResizable(false);
 	getContentPane().setBackground(Color.white);
 	setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -112,15 +112,15 @@ public class hexLogic extends JFrame {
 		lollipop, lollipoptf, lucky, luckytf, wrapped, wrappedtf);
 
 	JPanel bottomButtons = new JPanel();
-	bottomButtons.setLayout(new GridLayout(1, 2));
+	bottomButtons.setLayout(new BoxLayout(bottomButtons, BoxLayout.X_AXIS));
 	bottomButtons.setBackground(Color.white);
 	bottomButtons.add(save);
 	bottomButtons.add(goBack);
-	bottomButtons.setPreferredSize(new Dimension(400, 80));
+	bottomButtons.setSize(400, 100);
+	bottomButtons.setPreferredSize(new Dimension(400, 100));
 
 	add(numbers);
 	add(bottomButtons);
-	add(Box.createVerticalStrut(20));
 
     }
 
