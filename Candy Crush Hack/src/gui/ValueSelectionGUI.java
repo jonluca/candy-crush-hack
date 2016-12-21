@@ -38,8 +38,9 @@ import other.Constants;
 public class ValueSelectionGUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    private JLabel lives, color, jelly, coconut, lollipop, lucky, wrapped, hands;
-    private JFormattedTextField livestf, colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf, handstf;
+    private JLabel lives, color, jelly, coconut, lollipop, lucky, wrapped, hands, ufo, paint;
+    private JFormattedTextField livestf, colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf, handstf, ufotf,
+	    painttf;
     private JButton save, goBack, maxAll;
     private CCHack cchack;
     private File file;
@@ -95,10 +96,20 @@ public class ValueSelectionGUI extends JFrame {
 	    raf.readFully(data);
 	    wrappedtf.setText(Integer.toString(((data[0] & 0xFF) << 8) | (data[1] & 0xFF)));
 
-	    // Wrapped
+	    // Hands
 	    raf.seek(176);
 	    raf.readFully(data);
 	    handstf.setText(Integer.toString(((data[0] & 0xFF) << 8) | (data[1] & 0xFF)));
+
+	    // UFO
+	    raf.seek(212);
+	    raf.readFully(data);
+	    ufotf.setText(Integer.toString(((data[0] & 0xFF) << 8) | (data[1] & 0xFF)));
+
+	    // paint
+	    raf.seek(224);
+	    raf.readFully(data);
+	    painttf.setText(Integer.toString(((data[0] & 0xFF) << 8) | (data[1] & 0xFF)));
 
 	    // Lives
 	    raf.seek(656);
@@ -134,7 +145,7 @@ public class ValueSelectionGUI extends JFrame {
     }
 
     public void initializeComponents() {
-	setSize(500, 550);
+	setSize(500, 650);
 	setResizable(false);
 	getContentPane().setBackground(Color.white);
 	setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -164,9 +175,11 @@ public class ValueSelectionGUI extends JFrame {
 		    int luckyInt = Integer.parseInt(luckytf.getText());
 		    int wrappedInt = Integer.parseInt(wrappedtf.getText());
 		    int handsInt = Integer.parseInt(handstf.getText());
+		    int ufoInt = Integer.parseInt(ufotf.getText());
+		    int paintInt = Integer.parseInt(painttf.getText());
 
 		    hexEdits actualHack = new hexEdits(ourWindow, file, livesInt, colorInt, jellyInt, coconutInt,
-			    lollipopInt, luckyInt, wrappedInt, handsInt);
+			    lollipopInt, luckyInt, wrappedInt, handsInt, ufoInt, paintInt);
 		} catch (IOException e) {
 		    JOptionPane.showMessageDialog(ourWindow, "Error writing to file! Check console for stack trace!",
 			    "Writing Error", JOptionPane.ERROR_MESSAGE);
@@ -190,6 +203,8 @@ public class ValueSelectionGUI extends JFrame {
 	lucky = new JLabel("Lucky Candy");
 	wrapped = new JLabel("Wrapped and Striped");
 	hands = new JLabel("Hand Swaps");
+	ufo = new JLabel("UFO Drops");
+	paint = new JLabel("Paint");
 
 	NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
 	DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
@@ -203,8 +218,11 @@ public class ValueSelectionGUI extends JFrame {
 	luckytf = new JFormattedTextField(decimalFormat);
 	wrappedtf = new JFormattedTextField(decimalFormat);
 	handstf = new JFormattedTextField(decimalFormat);
+	ufotf = new JFormattedTextField(decimalFormat);
+	painttf = new JFormattedTextField(decimalFormat);
 
-	AppearanceSettings.setColumn(livestf, colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf);
+	AppearanceSettings.setColumn(livestf, colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf, handstf,
+		ufotf, painttf);
 
 	livestf.getDocument().addDocumentListener(new validNumber(livestf));
 	colortf.getDocument().addDocumentListener(new validNumber(colortf));
@@ -214,26 +232,29 @@ public class ValueSelectionGUI extends JFrame {
 	luckytf.getDocument().addDocumentListener(new validNumber(luckytf));
 	wrappedtf.getDocument().addDocumentListener(new validNumber(wrappedtf));
 	handstf.getDocument().addDocumentListener(new validNumber(handstf));
+	ufotf.getDocument().addDocumentListener(new validNumber(ufotf));
+	painttf.getDocument().addDocumentListener(new validNumber(painttf));
 
-	AppearanceSettings.setSize(300, 50, lives, color, jelly, coconut, lollipop, lucky, wrapped, hands);
+	AppearanceSettings.setSize(300, 50, lives, color, jelly, coconut, lollipop, lucky, wrapped, hands, ufo, paint);
 	AppearanceSettings.setSize(80, 50, livestf, colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf,
-		handstf);
+		handstf, ufotf, painttf);
 	AppearanceSettings.setBackground(Color.white, lives, color, jelly, coconut, lollipop, lucky, wrapped, livestf,
-		colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf, hands, handstf);
+		colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf, hands, handstf, painttf, paint);
 	AppearanceSettings.setFont(Constants.regularFont, lives, color, jelly, coconut, lollipop, lucky, wrapped, hands,
-		livestf, colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf, handstf);
+		livestf, colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf, handstf, ufo, ufotf, paint,
+		painttf);
 
 	AppearanceSettings.setTextAlignment(livestf, colortf, jellytf, coconuttf, lollipoptf, luckytf, wrappedtf,
-		handstf);
+		handstf, ufotf, painttf);
     }
 
     public void createGUI() {
 	JPanel numbers = new JPanel();
-	numbers.setLayout(new GridLayout(8, 1));
-	numbers.setSize(400, 400);
+	numbers.setLayout(new GridLayout(10, 1));
+	numbers.setSize(400, 500);
 
 	AppearanceSettings.addToGrid(numbers, lives, livestf, color, colortf, jelly, jellytf, coconut, coconuttf,
-		lollipop, lollipoptf, lucky, luckytf, wrapped, wrappedtf, hands, handstf);
+		lollipop, lollipoptf, lucky, luckytf, wrapped, wrappedtf, hands, handstf, ufo, ufotf, paint, paintf);
 
 	JPanel bottomButtons = new JPanel();
 	bottomButtons.setLayout(new GridLayout(1, 2));

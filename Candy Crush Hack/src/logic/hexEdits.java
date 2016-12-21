@@ -28,10 +28,10 @@ More?
 public class hexEdits {
     private File file;
     private JFrame origin;
-    int livesInt, colorInt, jellyInt, coconutInt, lollipopInt, luckyInt, wrappedInt, handsInt;
+    int livesInt, colorInt, jellyInt, coconutInt, lollipopInt, luckyInt, wrappedInt, handsInt, ufoInt, paintInt;
 
     public hexEdits(JFrame origin, File file, int livesInt, int colorInt, int jellyInt, int coconutInt, int lollipopInt,
-	    int luckyInt, int wrappedInt, int handsInt) throws IOException {
+	    int luckyInt, int wrappedInt, int handsInt, int ufoInt, int paintInt) throws IOException {
 	this.origin = origin;
 	this.livesInt = livesInt;
 	this.colorInt = colorInt;
@@ -41,6 +41,8 @@ public class hexEdits {
 	this.luckyInt = luckyInt;
 	this.wrappedInt = wrappedInt;
 	this.handsInt = handsInt;
+	this.ufoInt = ufoInt;
+	this.paintInt = paintInt;
 
 	this.file = file;
 	editFile();
@@ -106,6 +108,22 @@ public class hexEdits {
 
 		data[0] = (byte) (handsInt & 0xFF);
 		data[1] = (byte) ((handsInt >> 8) & 0xFF);
+
+		raf.write(data);
+
+		// UFO
+		raf.seek(212);
+
+		data[0] = (byte) (ufoInt & 0xFF);
+		data[1] = (byte) ((ufoInt >> 8) & 0xFF);
+
+		raf.write(data);
+
+		// paint
+		raf.seek(224);
+
+		data[0] = (byte) (paintInt & 0xFF);
+		data[1] = (byte) ((paintInt >> 8) & 0xFF);
 
 		raf.write(data);
 
