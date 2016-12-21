@@ -1,0 +1,90 @@
+package gui;
+
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import logic.hexLogic;
+
+public class CCHack extends JFrame {
+
+    private static final long serialVersionUID = 1L;
+    private JLabel selectLabel, infoLabel;
+    private JButton selectButton, helpButton;
+    private JFileChooser file;
+    private File selectedFile;
+    private Font topFont, regularFont, whiteFont;
+
+    public CCHack() {
+	super("Candy Crush Save Game Hack");
+	initializeComponents();
+	createGUI();
+    }
+
+    public static void main(String[] args) {
+	CCHack cchack = new CCHack();
+	cchack.setVisible(true);
+    }
+
+    private void initializeComponents() {
+
+	setSize(800, 200);
+	setResizable(false);
+	getContentPane().setBackground(Color.white);
+	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	setLayout(new FlowLayout());
+
+	selectLabel = new JLabel("Please select your save.dat");
+	infoLabel = new JLabel("Welcome to Candy Crush Saga Hacks!");
+	selectButton = new JButton("Choose File");
+	helpButton = new JButton("Help");
+
+	topFont = new Font("Calibri", Font.BOLD, 45);
+	regularFont = new Font("Calibri", Font.PLAIN, 20);
+	whiteFont = new Font("Calibri", Font.BOLD, 24);
+
+	selectButton.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent ae) {
+		file = new JFileChooser("Choose File");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter(".dat files", "dat");
+		file.setFileFilter(filter);
+		file.setAcceptAllFileFilterUsed(false);
+		int returnValue = file.showOpenDialog(null);
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+		    selectedFile = file.getSelectedFile();
+		    hexLogic logic = new hexLogic(selectedFile);
+		}
+	    }
+	});
+
+    }
+
+    private void createGUI() {
+	// Info label top
+	infoLabel.setAlignmentX(CENTER_ALIGNMENT);
+	infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+	infoLabel.setFont(topFont);
+	JPanel top = new JPanel();
+	top.setBackground(Color.WHITE);
+	top.setSize(800, 150);
+	top.add(infoLabel);
+
+	add(top);
+	
+	//Bottom buttons
+	AppearanceSettings.setSize(350, 50, selectButton, helpButton);
+
+    }
+
+}

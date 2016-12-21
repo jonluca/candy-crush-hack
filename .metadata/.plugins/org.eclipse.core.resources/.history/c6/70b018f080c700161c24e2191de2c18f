@@ -1,0 +1,8 @@
+package logic;
+
+public class hexLogic {
+    
+    public hexLogic(File file){
+	
+    }
+}

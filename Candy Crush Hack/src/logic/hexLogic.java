@@ -1,0 +1,10 @@
+package logic;
+
+import java.io.File;
+
+public class hexLogic {
+
+    public hexLogic(File file) {
+
+    }
+}
