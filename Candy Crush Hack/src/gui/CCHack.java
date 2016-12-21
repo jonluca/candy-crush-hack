@@ -61,21 +61,29 @@ public class CCHack extends JFrame {
 	selectButton.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent ae) {
 		file = new JFileChooser("Choose File");
+		// set default home
 		String userhome = System.getProperty("user.home");
 		file.setCurrentDirectory(new File(userhome + System.getProperty("file.separator") + "Desktop"));
+		// only allow .dats
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(".dat files", "dat");
+
 		file.setFileFilter(filter);
 		file.setAcceptAllFileFilterUsed(false);
+
 		int returnValue = file.showOpenDialog(null);
+
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 		    selectedFile = file.getSelectedFile();
 		    try {
+			// start hack
 			ValueSelectionGUI logic = new ValueSelectionGUI(selectedFile, (CCHack) ourFrame);
 			setVisible(false);
 		    } catch (IOException e) {
-			// TODO Auto-generated catch block
+			// They've run this program multiple times - might over
+			// write their back up from a messed up file. Tell them
+			// to move it and try again
 			JOptionPane.showMessageDialog(ourFrame,
-				"Unable to save backup! Check if your file + .bak already exists. If it does, delete it and try again.",
+				"Unable to save backup! Check if your file + .bak already exists. If it does, move it and try again.",
 				"Backup Save Error", JOptionPane.ERROR_MESSAGE);
 			setVisible(true);
 		    }
