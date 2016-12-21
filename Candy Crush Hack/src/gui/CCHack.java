@@ -7,11 +7,14 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -26,6 +29,7 @@ public class CCHack extends JFrame {
     private JFileChooser file;
     private File selectedFile;
     private Font topFont, regularFont, whiteFont;
+    private JFrame ourFrame;
 
     public CCHack() {
 	super("Candy Crush Save Game Hack");
@@ -39,6 +43,8 @@ public class CCHack extends JFrame {
     }
 
     private void initializeComponents() {
+
+	ourFrame = this;
 
 	setSize(800, 200);
 	setResizable(false);
@@ -59,13 +65,25 @@ public class CCHack extends JFrame {
 	selectButton.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent ae) {
 		file = new JFileChooser("Choose File");
+		String userhome = System.getProperty("user.home");
+		file.setCurrentDirectory(new File(userhome + System.getProperty("file.separator") + "Desktop"));
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(".dat files", "dat");
 		file.setFileFilter(filter);
 		file.setAcceptAllFileFilterUsed(false);
 		int returnValue = file.showOpenDialog(null);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 		    selectedFile = file.getSelectedFile();
-		    hexLogic logic = new hexLogic(selectedFile);
+		    try {
+			hexLogic logic = new hexLogic(selectedFile);
+			setVisible(false);
+		    } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(ourFrame,
+				"Unable to save backup! Check if your file + .bak already exists. If it does, delete it and try again.",
+				"Backup Save Error", JOptionPane.ERROR_MESSAGE);
+			setVisible(true);
+		    }
 		}
 	    }
 	});
@@ -84,7 +102,10 @@ public class CCHack extends JFrame {
 
 	add(top);
 
+	//
 	add(selectLabel);
+
+	add(Box.createVerticalGlue());
 	// Bottom buttons
 	AppearanceSettings.setSize(350, 50, selectButton, helpButton);
 	JPanel bottom = new JPanel();

@@ -1,0 +1,36 @@
+package logic;
+
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class hexLogic extends JFrame {
+    private JLabel lives, color, jelly, coconut, lollipop, lucky, wrapped;
+
+    public hexLogic(File file) throws IOException {
+	super("Select Values");
+	Path source = Paths.get(file.getAbsolutePath());
+	Path destination = Paths.get(file.getAbsolutePath() + ".bak");
+	Files.copy(source, destination);
+    }
+
+    public void initializeComponents() {
+	setSize(800, 200);
+	setResizable(false);
+	getContentPane().setBackground(Color.white);
+	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	setLayout(new FlowLayout());
+	setLocationRelativeTo(null);
+    }
+
+    public void createGUI() {
+
+    }
+}

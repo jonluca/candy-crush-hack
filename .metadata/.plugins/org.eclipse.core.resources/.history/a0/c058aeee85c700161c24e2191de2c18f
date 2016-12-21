@@ -1,0 +1,11 @@
+package logic;
+
+import java.io.File;
+import java.nio.file.Files;
+
+public class hexLogic {
+
+    public hexLogic(File file) {
+	Files.copy(file.getAbsolutePath(), file.getAbsolutePath() + ".bak", false);
+    }
+}
