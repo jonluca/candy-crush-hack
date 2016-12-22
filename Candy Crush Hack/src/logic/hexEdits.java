@@ -17,6 +17,9 @@ note: it appears King stores their variables in int16s rather than regular ints.
 I'm not sure why, because you would either go for short or an int. int16 is quite an odd choice ¯\_(ツ)_/¯
 Just 2 bytes, though
 
+addendum: it seems like all the offsets are 12 bytes off of each other, except for lives. This might come in handy
+in the future when more types of bonuses get added
+
 0x00000290 00 – Lives
 0x00000050 00 – Color Bomb
 0x00000050 0C – Jelly Fish
@@ -25,30 +28,21 @@ Just 2 bytes, though
 0x00000090 08 – Lucky Candy
 0x000000A0 04 – Wrapped and Striped
 More?
-0x000000B0 00 - hands
+0x000000B0 00 - Hand Swap
+0x000000D0 04 - UFO
+0x000000E0 00 - Paint
 
 */
 
 public class hexEdits {
     private File file;
     private JFrame origin;
-    int livesInt, colorInt, jellyInt, coconutInt, lollipopInt, luckyInt, wrappedInt, handsInt, ufoInt, paintInt;
+    private int[] selectedValues;
 
-    public hexEdits(JFrame origin, File file, int livesInt, int colorInt, int jellyInt, int coconutInt, int lollipopInt,
-	    int luckyInt, int wrappedInt, int handsInt, int ufoInt, int paintInt) throws IOException {
+    public hexEdits(JFrame origin, File file, int[] selectedValues) throws IOException {
 	this.origin = origin;
-	this.livesInt = livesInt;
-	this.colorInt = colorInt;
-	this.jellyInt = jellyInt;
-	this.coconutInt = coconutInt;
-	this.lollipopInt = lollipopInt;
-	this.luckyInt = luckyInt;
-	this.wrappedInt = wrappedInt;
-	this.handsInt = handsInt;
-	this.ufoInt = ufoInt;
-	this.paintInt = paintInt;
-
 	this.file = file;
+	this.selectedValues = selectedValues;
 	editFile();
     }
 
@@ -62,81 +56,83 @@ public class hexEdits {
 
 		byte[] data = new byte[2]; // initialize 2 byte array.
 
-		data[0] = (byte) (colorInt & 0xFF); // byte mask to get the
-						    // first byte
-		data[1] = (byte) ((colorInt >> 8) & 0xFF);// shifted by a byte
+		data[0] = (byte) (selectedValues[1] & 0xFF); // byte mask to get
+							     // the
+		// first byte
+		data[1] = (byte) ((selectedValues[1] >> 8) & 0xFF);// shifted by
+								   // a byte
 
 		raf.write(data);
 
 		// Jelly
 		raf.seek(92);
 
-		data[0] = (byte) (jellyInt & 0xFF);
-		data[1] = (byte) ((jellyInt >> 8) & 0xFF);
+		data[0] = (byte) (selectedValues[2] & 0xFF);
+		data[1] = (byte) ((selectedValues[2] >> 8) & 0xFF);
 
 		raf.write(data);
 
 		// Coconut
 		raf.seek(104);
 
-		data[0] = (byte) (coconutInt & 0xFF);
-		data[1] = (byte) ((coconutInt >> 8) & 0xFF);
+		data[0] = (byte) (selectedValues[3] & 0xFF);
+		data[1] = (byte) ((selectedValues[3] >> 8) & 0xFF);
 
 		raf.write(data);
 
 		// Lollipop
 		raf.seek(116);
 
-		data[0] = (byte) (lollipopInt & 0xFF);
-		data[1] = (byte) ((lollipopInt >> 8) & 0xFF);
+		data[0] = (byte) (selectedValues[4] & 0xFF);
+		data[1] = (byte) ((selectedValues[4] >> 8) & 0xFF);
 
 		raf.write(data);
 
 		// Lucky
 		raf.seek(152);
 
-		data[0] = (byte) (luckyInt & 0xFF);
-		data[1] = (byte) ((luckyInt >> 8) & 0xFF);
+		data[0] = (byte) (selectedValues[5] & 0xFF);
+		data[1] = (byte) ((selectedValues[5] >> 8) & 0xFF);
 
 		raf.write(data);
 
 		// Wrapped
 		raf.seek(164);
 
-		data[0] = (byte) (wrappedInt & 0xFF);
-		data[1] = (byte) ((wrappedInt >> 8) & 0xFF);
+		data[0] = (byte) (selectedValues[6] & 0xFF);
+		data[1] = (byte) ((selectedValues[6] >> 8) & 0xFF);
 
 		raf.write(data);
 
 		// Hand
 		raf.seek(176);
 
-		data[0] = (byte) (handsInt & 0xFF);
-		data[1] = (byte) ((handsInt >> 8) & 0xFF);
+		data[0] = (byte) (selectedValues[7] & 0xFF);
+		data[1] = (byte) ((selectedValues[7] >> 8) & 0xFF);
 
 		raf.write(data);
 
 		// UFO
 		raf.seek(212);
 
-		data[0] = (byte) (ufoInt & 0xFF);
-		data[1] = (byte) ((ufoInt >> 8) & 0xFF);
+		data[0] = (byte) (selectedValues[8] & 0xFF);
+		data[1] = (byte) ((selectedValues[8] >> 8) & 0xFF);
 
 		raf.write(data);
 
 		// paint
 		raf.seek(224);
 
-		data[0] = (byte) (paintInt & 0xFF);
-		data[1] = (byte) ((paintInt >> 8) & 0xFF);
+		data[0] = (byte) (selectedValues[9] & 0xFF);
+		data[1] = (byte) ((selectedValues[9] >> 8) & 0xFF);
 
 		raf.write(data);
 
 		// Lives
 		raf.seek(656);
 
-		data[0] = (byte) (livesInt & 0xFF);
-		data[1] = (byte) ((livesInt >> 8) & 0xFF);
+		data[0] = (byte) (selectedValues[0] & 0xFF);
+		data[1] = (byte) ((selectedValues[0] >> 8) & 0xFF);
 
 		raf.write(data);
 

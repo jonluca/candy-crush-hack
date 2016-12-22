@@ -170,21 +170,22 @@ public class ValueSelectionGUI extends JFrame {
 	save.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent ae) {
 		try {
-		    int livesInt = Integer.parseInt(livestf.getText());
-		    int colorInt = Integer.parseInt(colortf.getText());
-		    int jellyInt = Integer.parseInt(jellytf.getText());
-		    int coconutInt = Integer.parseInt(coconuttf.getText());
-		    int lollipopInt = Integer.parseInt(lollipoptf.getText());
-		    int luckyInt = Integer.parseInt(luckytf.getText());
-		    int wrappedInt = Integer.parseInt(wrappedtf.getText());
-		    int handsInt = Integer.parseInt(handstf.getText());
-		    int ufoInt = Integer.parseInt(ufotf.getText());
-		    int paintInt = Integer.parseInt(painttf.getText());
+		    int[] selectedValues = new int[10];
+
+		    selectedValues[0] = Integer.parseInt(livestf.getText());
+		    selectedValues[1] = Integer.parseInt(colortf.getText());
+		    selectedValues[2] = Integer.parseInt(jellytf.getText());
+		    selectedValues[3] = Integer.parseInt(coconuttf.getText());
+		    selectedValues[4] = Integer.parseInt(lollipoptf.getText());
+		    selectedValues[5] = Integer.parseInt(luckytf.getText());
+		    selectedValues[6] = Integer.parseInt(wrappedtf.getText());
+		    selectedValues[7] = Integer.parseInt(handstf.getText());
+		    selectedValues[8] = Integer.parseInt(ufotf.getText());
+		    selectedValues[9] = Integer.parseInt(painttf.getText());
 
 		    // Pass along selected values to the function that does the
 		    // actual modification of the save game file
-		    hexEdits actualHack = new hexEdits(ourWindow, file, livesInt, colorInt, jellyInt, coconutInt,
-			    lollipopInt, luckyInt, wrappedInt, handsInt, ufoInt, paintInt);
+		    hexEdits actualHack = new hexEdits(ourWindow, file, selectedValues);
 		} catch (IOException e) {
 		    JOptionPane.showMessageDialog(ourWindow, "Error writing to file! Check console for stack trace!",
 			    "Writing Error", JOptionPane.ERROR_MESSAGE);
